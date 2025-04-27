@@ -62,7 +62,8 @@ WITH film_popularity AS (
     FROM public.country co
     INNER JOIN public.city ci ON co.country_id = ci.country_id
     INNER JOIN public.address a ON ci.city_id = a.city_id
-    INNER JOIN public.store s ON a.address_id = s.address_id
+	INNER JOIN public.customer c ON a.address_id = c.address_id
+	INNER JOIN public.store s ON c.store_id = s.store_id
     INNER JOIN public.inventory i ON s.store_id = i.store_id
     INNER JOIN public.rental r ON i.inventory_id = r.inventory_id
     INNER JOIN public.film f ON i.film_id = f.film_id
@@ -91,7 +92,7 @@ WHERE rf.rnk = 1;
 END;
 $$ LANGUAGE plpgsql;
 
-SELECT * FROM mostpop_film(ARRAY['Australia', 'Canada', 'United States']);
+SELECT * FROM mostpop_film(ARRAY['Afghanistan','Brazil','United States']);
 
 --TASK 4
 --Create a function that generates a list of movies available in stock based on a partial title match (e.g., movies containing the word 'love' in their title). 
